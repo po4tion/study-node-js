@@ -42,14 +42,21 @@ yargs.command({
 yargs.command({
   command: 'list',
   describe: 'list your notes',
-  handler: () => console.log('Listing out all note'),
+  handler: () => note.listNote(),
 });
 
 // read 명령어
 yargs.command({
   command: 'read',
   describe: 'Read a note',
-  handler: () => console.log('Reading a note'),
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler: (argv) => note.readNote(argv.title),
 });
 
 console.log(yargs.argv);

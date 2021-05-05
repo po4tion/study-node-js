@@ -5,9 +5,9 @@ const getNotes = () => 'Your notes...';
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter((note) => note.title === title);
+  const duplicateNote = notes.find((note) => note.title === title);
 
-  if (duplicateNotes.length === 0) {
+  if (!duplicateNote) {
     notes.push({
       title: title,
       body: body,
@@ -33,6 +33,33 @@ const removeNote = (title) => {
   }
 };
 
+const listNote = () => {
+  console.log(chalk.green.inverse('노트 리스트 출력...'));
+
+  const noteData = loadNotes();
+
+  if (noteData.length) {
+    noteData.forEach((note) => {
+      console.log(note.title);
+    });
+  } else {
+    console.log(chalk.red.inverse('보유중인 노트가 없습니다.'));
+  }
+};
+
+const readNote = (title) => {
+  const readData = loadNotes();
+
+  const findData = readData.find((data) => data.title === title);
+
+  if (findData) {
+    console.log(chalk.inverse(findData.title));
+    console.log(findData.body);
+  } else {
+    console.log(chalk.red('해당 제목의 노트가 존재하지 않습니다.'));
+  }
+};
+
 const saveNotes = (notes) => {
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync('notes.json', dataJSON);
@@ -53,4 +80,6 @@ module.exports = {
   getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
+  listNote: listNote,
+  readNote: readNote,
 };
