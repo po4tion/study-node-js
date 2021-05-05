@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.js": "javascript"
+  },
+  "editor.fontSize": 17
+}

@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const yargs = require('yargs');
-const getNotes = require('./note.js');
+const note = require('./note.js');
 
 // yargs 버전 세팅
 yargs.version('1.1.0');
@@ -21,17 +21,21 @@ yargs.command({
       type: 'string',
     },
   },
-  handler: (argv) => {
-    console.log('Title: ', argv.title);
-    console.log('Body: ', argv.body);
-  },
+  handler: (argv) => note.addNote(argv.title, argv.body),
 });
 
 // remove 명령어
 yargs.command({
   command: 'remove',
   describe: 'Remove a note',
-  handler: () => console.log('Removing the note'),
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler: (argv) => note.removeNote(argv.title),
 });
 
 // list 명령어
