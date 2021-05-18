@@ -14,9 +14,9 @@ const addNote = (title, body) => {
     });
 
     saveNotes(notes);
-    console.log('새로운 노트 추가!');
+    console.log(chalk.green.inverse('새로운 노트 추가!'));
   } else {
-    console.log('노트 제목이 이미 존재합니다.');
+    console.log(chalk.red.inverse('노트 제목이 이미 존재합니다.'));
   }
 };
 
