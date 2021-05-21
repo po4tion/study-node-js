@@ -1,11 +1,10 @@
-console.log('시작');
+const request = require('request');
 
-setTimeout(() => {
-  console.log('2 Second Timer');
-}, 2000);
+const url =
+  'http://api.weatherstack.com/current?access_key=9af5b906c999cccad566ff5cf5720a10&query=Seoul';
 
-setTimeout(() => {
-  console.log('0 Second Timer');
-}, 0);
+request({ url: url }, (error, response) => {
+  const data = JSON.parse(response.body);
 
-console.log('중지');
+  console.log(data.current);
+});
