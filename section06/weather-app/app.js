@@ -1,11 +1,23 @@
-const request = require('request');
 const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
 
-// weatherstack uri
-const url =
-  'http://api.weatherstack.com/current?access_key=9af5b906c999cccad566ff5cf5720a10&query=40.7831,-73.9712';
+const address = process.argv[2];
 
-geocode('seoul', (error, data) => {
-  console.log('Error', error);
-  console.log('Data', data);
-});
+if (!address) {
+  console.log('주소를 적어주세요');
+} else {
+  geocode(address, (error, { latitude, longitude, location } = {}) => {
+    if (error) {
+      return console.log(error);
+    }
+
+    forecast(latitude, longitude, (error, forecastData) => {
+      if (error) {
+        return console.log(error);
+      }
+
+      console.log(location);
+      console.log(forecastData);
+    });
+  });
+}
